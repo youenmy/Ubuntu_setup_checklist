@@ -17,6 +17,16 @@ echo 'net.ipv4.icmp_echo_ignore_all=1' | tee /etc/sysctl.d/99-noping.conf > /dev
 
 htop и btop - мониторы ресурсов, второй более красивый
 
+Создать и Включить Swop:
+fallocate -l 1G /swapfile && \ #Создаём файл на 1 ГБ
+chmod 600 /swapfile && \ #Закрываем права — только root
+mkswap /swapfile && \ #Размечаем файл как swap
+swapon /swapfile && \ #Включаем
+echo '/swapfile none swap sw 0 0' >> /etc/fstab && \ #Прописываем в fstab, чтобы поднимался после ребута
+echo 'vm.swappiness = 10' >> /etc/sysctl.conf && \ #Приглушаем агрессивность свопа
+sysctl vm.swappiness=10 
+free -h
+
 
 
 
